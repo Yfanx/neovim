@@ -20,3 +20,18 @@ keymap.set("i", "<C-l>", "<ESC>A")
 
 keymap.set("n", "<C-a>", "ggI<ESC>vG$")
 keymap.set("n", "gh", "gg_")
+
+keymap.set("n", "<leader>nh", ":set nohlsearch<enter>")
+
+vim.api.nvim_set_keymap("n", "<leader>rde", ":lua DeleteExeFiles()<CR>", { noremap = true, silent = true })
+
+function DeleteExeFiles()
+  local current_file_path = vim.fn.expand("%:p:h") -- 获取当前文件所在的文件夹路径
+  local delete_command = "powershell -Command \"Remove-Item -Path '" .. current_file_path .. "\\*.exe' -Force\"" -- 构建删除命令
+  vim.fn.system(delete_command) -- 执行删除命令
+  print("Deleted all .exe files in " .. current_file_path)
+end
+
+keymap.set("n", "<leader>cs", ":MarkdownPreview<enter>")
+keymap.set("n", "<leader>ms", ":MarkdownPreviewStop<enter>")
+keymap.set("n", "<leader>cp", ":MarkdownPreviewToggle<enter>")
